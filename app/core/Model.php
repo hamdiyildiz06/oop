@@ -3,6 +3,6 @@ class Model extends MysqliDb {
     public $db;
 
     public function __construct(){
-        $this->db = new MysqliDb ('localhost', 'root', '', 'oop');
+        $this->db = new MysqliDb (HOST, USER, PASS, DBNAME);
     }
 }
