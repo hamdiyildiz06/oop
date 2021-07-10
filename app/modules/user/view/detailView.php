@@ -1,0 +1,2 @@
+
+detay sayfası view görüntüsü
