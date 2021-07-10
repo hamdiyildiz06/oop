@@ -1,7 +1,7 @@
 <?php
 
 class App{
-    protected $routes = [];
+    protected static $routes = [];
 
     protected $activePath;
 
@@ -20,16 +20,16 @@ class App{
         };
     }
 
-    public function get($path, $collback){
-        $this->routes[] = ['GET', $path, $collback];
+    public static function get($path, $collback){
+        self::$routes[] = ['GET', $path, $collback];
     }
 
     public function post($path, $collback){
-        $this->routes[] = ['POST', $path, $collback];
+        self::$routes[] = ['POST', $path, $collback];
     }
 
     public function run(){
-        foreach ($this->routes as $route){
+        foreach (self::$routes as $route){
 
 
             list($method, $path, $params) = $route;
