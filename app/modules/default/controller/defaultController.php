@@ -2,10 +2,10 @@
 
 class defaultController extends Controller {
 
-    public function indexAction($id){
+    public function indexAction(){
         $data = array();
-        $indexModel = new defaultModel();
-        $data["user"] = $indexModel->indexModel($id);
+   //     $indexModel = new defaultModel();
+    //    $data["user"] = $indexModel->indexModel($id);
 
         $this->renderLayout("main","default","index", $data);
     }

@@ -20,29 +20,35 @@ class App{
         };
     }
 
-    public static function get($path, $collback){
-        self::$routes[] = ['GET', $path, $collback];
+    public static function get($path, $callback = null){
+        self::$routes[] = ['GET', $path, $callback];
     }
 
-    public function post($path, $collback){
-        self::$routes[] = ['POST', $path, $collback];
+    public static function post($path, $callback = null){
+        self::$routes[] = ['POST', $path, $callback];
     }
 
     public function run(){
-        foreach (self::$routes as $route){
 
+        foreach (self::$routes as $route){
 
             list($method, $path, $params) = $route;
             $methodCheck = $this->activeMethod == $method;
-            $pathCheck   = preg_match("~^{$path}~",$this->activePath, $params);
+            $pathCheck   = preg_match("~^{$path}$~", $this->activePath, $params);
 
             if ($methodCheck && $pathCheck){
-                echo "<br>";
 
                  $url = explode("/", $path);
-                 $module = $url[1];
-                 $controller = $url[1]."Controller";
-                 $action     = $url[2]."Action";
+
+                 if (count($url) == 2){
+                     $module = "default";
+                     $controller = "defaultController";
+                     $action     = "indexAction";
+                 }else{
+                     $module = $url[1];
+                     $controller = $url[1]."Controller";
+                     $action     = $url[2]."Action";
+                 }
 
                  if (file_exists($file = APP_DIR."/modules/{$module}/controller/{$controller}.php")){
                      require_once $file;
