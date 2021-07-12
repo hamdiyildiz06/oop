@@ -2,7 +2,7 @@
 // Default
 App::get('/');
 App::get('/default/index', true);
-App::get('/default/detail/([\d]+)', true);
+App::get('/default/detail/([\d]+)', false);
 App::get('/default/login', false);
 
 //App::get('/default/detail/([\d]+)', function (){});

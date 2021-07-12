@@ -1,2 +1,2 @@
 
-detay sayfası view görüntüsü
+detay sayfası view görüntüsüüüü

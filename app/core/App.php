@@ -57,10 +57,10 @@ class App{
                          $action     = $url[2]."Action";
 
 
-                         echo $module."<br>";
-                         echo $controller."<br>";
-                         echo $action."<br>";
-                         die("***");
+//                         echo $module."<br>";
+//                         echo $controller."<br>";
+//                         echo $action."<br>";
+//                         die("***");
                      }else{
 
                          Controller::redirect($this->auth['auth_urls'][$url[1]]);
