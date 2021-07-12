@@ -14,4 +14,9 @@ class defaultController extends Controller {
         $data = [];
         $this->renderLayout("main","default","detail", $data);
     }
+
+    public function loginAction(){
+        $data = [];
+        $this->renderLayout("main","default","login", $data);
+    }
 }

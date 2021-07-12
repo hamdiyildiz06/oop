@@ -2,17 +2,21 @@
 
 class App{
     protected static $routes = [];
+    protected static $config;
 
     protected $activePath;
-
     protected $activeMethod;
-
     protected $notFound;
+    protected $auth;
 
-    public function __construct($activePath, $activeMethod)
+
+
+    public function __construct($activePath, $activeMethod, $config)
     {
         $this->activePath = $activePath;
         $this->activeMethod = $activeMethod;
+        self::$config = $config;
+        $this->auth = self::$config['authentication'];
 
         $this->notFound = function (){
             http_response_code(404);
@@ -20,19 +24,19 @@ class App{
         };
     }
 
-    public static function get($path, $callback = null){
-        self::$routes[] = ['GET', $path, $callback];
+    public static function get($path, $auth = false, $callback = null){
+        self::$routes[] = ['GET', $path, $auth, $callback];
     }
 
-    public static function post($path, $callback = null){
-        self::$routes[] = ['POST', $path, $callback];
+    public static function post($path, $auth = false, $callback = null){
+        self::$routes[] = ['POST', $path, $auth, $callback];
     }
 
     public function run(){
 
         foreach (self::$routes as $route){
 
-            list($method, $path, $params) = $route;
+            list($method, $path, $auth, $params) = $route;
             $methodCheck = $this->activeMethod == $method;
             $pathCheck   = preg_match("~^{$path}$~", $this->activePath, $params);
 
@@ -41,13 +45,28 @@ class App{
                  $url = explode("/", $path);
 
                  if (count($url) == 2){
-                     $module = "default";
+                     $module     = "default";
                      $controller = "defaultController";
                      $action     = "indexAction";
                  }else{
-                     $module = $url[1];
-                     $controller = $url[1]."Controller";
-                     $action     = $url[2]."Action";
+
+                     if ($auth == true && isset($_SESSION[$this->auth['auth_files'][$url[1]]]) || $auth == false){
+
+                         $module     = $url[1];
+                         $controller = $url[1]."Controller";
+                         $action     = $url[2]."Action";
+
+
+                         echo $module."<br>";
+                         echo $controller."<br>";
+                         echo $action."<br>";
+                         die("***");
+                     }else{
+
+                         Controller::redirect($this->auth['auth_urls'][$url[1]]);
+                         exit;
+                     }
+
                  }
 
                  if (file_exists($file = APP_DIR."/modules/{$module}/controller/{$controller}.php")){

@@ -7,4 +7,8 @@ class Controller {
     public function renderLayout($layout, $module, $action, $params = []){
         return view::renderLayout($layout, $module, $action, $params);
     }
+
+    public static function redirect($path){
+        header("Location: {$path}");
+    }
 }

@@ -9,6 +9,18 @@ define("USER","root");
 define("PASS","");
 define("DBNAME","oop");
 
+global $config;
+$config = [
+  "authentication" => [
+      "auth_urls" => [
+          "default" => "/default/login"
+      ],
+      "auth_files" => [
+          "default" => "user"
+      ]
+  ]
+];
+
 require_once CORE."/MysqliDb.php";
 require_once CORE."/Model.php";
 require_once CORE."/Controller.php";
